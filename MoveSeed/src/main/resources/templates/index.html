@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="sm-scrollbar-black" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link th:href="@{/css/smart.css}" href="../static/css/smart.css" rel="stylesheet" />
+<link th:href="@{/css/msmart.css}" href="../static/css/msmart.css" rel="stylesheet" />
+<link th:href="@{/css/materialize/materialize.css}" type="text/css" rel="stylesheet"
+      href="../static/css/materialize/materialize.css" media="screen,projection"/>
+<title>我们不生产种子，我们只搜集、传播种子</title>
+</head>
+<body>
+<div id="move_root" class="">
+    <nav>
+        <div class="nav-wrapper">
+            <div >
+                <a href="#!" class="brand-logo">Logo</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <li><a href="collapsible.html">Javascript</a></li>
+                    <li><a href="mobile.html">Mobile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+
+<script th:src="@{/js/jquery-3.2.1.min.js}" src="../../static/js/jquery-3.2.1.min.js"></script>
+<script th:src="@{/js/materialize/materialize.js}" src="../../static/js/materialize/materialize.js"></script>
+<script th:src="@{/js/iconfont/iconfont.js}" src="../../static/js/iconfont/iconfont.js"></script>
+<script th:src="@{/js/vue/vue.js}" src="../../static/js/vue/vue.js"></script>
+<script th:src="@{/js/vue/vue-resource.min.js}" src="../../static/js/vue/vue-resource.min.js"></script>
+<script th:src="@{/js/smart/vars.js}" src="../../static/js/smart/vars.js"></script>
+<script th:src="@{/js/smart/utils.js}" src="../../static/js/smart/utils.js"></script>
+<script th:src="@{/js/smart/componentInitialization.js}"
+        src="../../static/js/smart/componentInitialization.js"></script>
+<script th:src="@{/js/smart/webSocketInitialization.js}"
+        src="../../static/js/smart/webSocketInitialization.js"></script>
+<script th:src="@{/js/smart/vueInitialization.js}" src="../../static/js/smart/vueInitialization.js"></script>
+<script th:src="@{/js/echarts/echarts.js}" src="../../static/js/echarts/echarts.js"></script>
+<script th:src="@{/js/smart/pakConfig.js}" src="../../static/js/smart/pakConfig.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    $().ready(function () {
+        initSize($("#pak_config_root_div"))
+        pakInitVue();
+
+    })
+
+</script>
+</html>

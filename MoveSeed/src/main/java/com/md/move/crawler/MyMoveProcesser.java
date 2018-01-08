@@ -26,7 +26,7 @@ public class MyMoveProcesser implements PageProcessor {
         Spider.create(new MyMoveProcesser())
                 .addUrl("http://www.55xia.com/?page=5").thread(5).run();
         long endTime = System.currentTimeMillis();
-        System.out.println("爬取结束...共耗时："+(endTime-startTime));
+        System.out.println("爬取结束...共耗时："+(endTime-startTime)/1000+"秒");
     }
     @Override
     public void process(Page page) {
