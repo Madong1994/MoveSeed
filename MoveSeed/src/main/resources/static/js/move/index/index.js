@@ -9,7 +9,8 @@ function initVue(){
             page:1,
             pageSize:30,
             pageTotal:0,
-            count:0
+            count:0,
+            url:'/moves/indexMove'
         },
         mounted:function () {
             this.init()
@@ -17,7 +18,7 @@ function initVue(){
         },
         methods: {
             init:function () {
-                this.$http.get("/moves/indexMove").then(function (res) {
+                this.$http.post("/moves/indexMove").then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)
@@ -61,15 +62,6 @@ function initVue(){
                     result = result.replace(/\s/g, "");
                 }
                 return result;
-            },select:function (paks) {
-                $('#selected').empty();
-                var html = '';
-                for (var i = 0;i<paks.length;i++){
-                    html += '<option  value="'+paks[i].terminals_no+'">'+paks[i].project_name+'</option>'
-                }
-
-                $('#selected').append(html)
-                $('select').material_select();
             },
             connectPak:function () {
                 // var address = this.Trim($('#address').val(),"g")
@@ -103,11 +95,13 @@ function initVue(){
                     this.select(resuest.result)
                 });
             },
-            del:function (terminals_no) {
+            animationMove:function (terminals_no) {
+                var aurl = "/moves/animationMove";
+                this.url = aurl;
                 var param = {
                     terminals_no:terminals_no
                 }
-                this.$http.post("/pak/del",param,{emulateJSON: true}).then(function (res) {
+                this.$http.post("/moves/animationMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)
@@ -123,12 +117,14 @@ function initVue(){
                     console.log(resuest.result)
                     this.select(resuest.result)
                 });
-            },downloadEmps:function () {
+            },domesticMove:function () {
                 var terminals_no = $('#selected').val();
+                var aurl = "/moves/domesticMove";
+                this.url = aurl
                 var param = {
                     terminals_no:terminals_no
                 }
-                this.$http.post("/pak/updatepak",param,{emulateJSON: true}).then(function (res) {
+                this.$http.post("/moves/domesticMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)
@@ -144,13 +140,15 @@ function initVue(){
                     // console.log(resuest.result)
                     // this.select(resuest.result)
                 });
-            },bindEmps:function () {
+            },jskMove:function () {
+                var aurl = "/moves/jskMove";
+                this.url = aurl
                 var terminals_no = $('#selected').val();
                 // alert(terminals_no)
                 var param = {
                     terminals_no:terminals_no
                 }
-                this.$http.post("/pak/bind",param,{emulateJSON: true}).then(function (res) {
+                this.$http.post("/moves/jskMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)
@@ -166,14 +164,16 @@ function initVue(){
                     // console.log(resuest.result)
                     // this.select(resuest.result)
                 });
-            },uploadCheckWork:function (time,terminals_no) {
+            },eaMove:function (time,terminals_no) {
+                var aurl = "/moves/eaMove";
+                this.url = aurl
                 var param = {
                     time:time,
                     terminals_no:terminals_no,
                     page:this.page,
                     pageSize:this.pageSize
                 }
-                this.$http.post("/pak/upload",param,{emulateJSON:true}).then(function (res) {
+                this.$http.post("/moves/eaMove",param,{emulateJSON:true}).then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)

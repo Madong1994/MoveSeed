@@ -26,8 +26,67 @@ public class MoveController {
     public String index(){
         return "/index";
     }
+
+    /**
+     * 首页
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @RequestMapping("/indexMove")
     public String indexData(int page,int pageSize){
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        String json = JSON.toJSONString(resultMsg);
+        return json;
+    }
+
+    /**
+     * 欧美
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/eaMove")
+    public String EAData(int page,int pageSize){
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        String json = JSON.toJSONString(resultMsg);
+        return json;
+    }
+
+    /**
+     * 日韩
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/jskMove")
+    public String JSKData(int page,int pageSize){
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        String json = JSON.toJSONString(resultMsg);
+        return json;
+    }
+
+    /**
+     * 国产
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/domesticMove")
+    public String domesticData(int page,int pageSize){
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        String json = JSON.toJSONString(resultMsg);
+        return json;
+    }
+
+    /**
+     * 动画
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/animationMove")
+    public String animationData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
         String json = JSON.toJSONString(resultMsg);
         return json;
