@@ -99,7 +99,8 @@ function initVue(){
                 var aurl = "/moves/animationMove";
                 this.url = aurl;
                 var param = {
-                    terminals_no:terminals_no
+                    page:1,
+                    pageSize:this.pageSize
                 }
                 this.$http.post("/moves/animationMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
@@ -112,17 +113,18 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    Materialize.toast(msg, 4000);
-                    this.paks = resuest.result
-                    console.log(resuest.result)
-                    this.select(resuest.result)
+                    this.moves = resuest.result
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
                 });
             },domesticMove:function () {
                 var terminals_no = $('#selected').val();
                 var aurl = "/moves/domesticMove";
                 this.url = aurl
                 var param = {
-                    terminals_no:terminals_no
+                    page:1,
+                    pageSize:this.pageSize
                 }
                 this.$http.post("/moves/domesticMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
@@ -135,10 +137,10 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    Materialize.toast(msg, 4000, 'rounded');
-                    // this.paks = resuest.result
-                    // console.log(resuest.result)
-                    // this.select(resuest.result)
+                    this.moves = resuest.result
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
                 });
             },jskMove:function () {
                 var aurl = "/moves/jskMove";
@@ -146,7 +148,8 @@ function initVue(){
                 var terminals_no = $('#selected').val();
                 // alert(terminals_no)
                 var param = {
-                    terminals_no:terminals_no
+                    page:1,
+                    pageSize:this.pageSize
                 }
                 this.$http.post("/moves/jskMove",param,{emulateJSON: true}).then(function (res) {
                     var resuest = res.data
@@ -159,18 +162,16 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    Materialize.toast(msg, 4000);
-                    // this.paks = resuest.result
-                    // console.log(resuest.result)
-                    // this.select(resuest.result)
+                    this.moves = resuest.result
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
                 });
             },eaMove:function (time,terminals_no) {
                 var aurl = "/moves/eaMove";
                 this.url = aurl
                 var param = {
-                    time:time,
-                    terminals_no:terminals_no,
-                    page:this.page,
+                    page:1,
                     pageSize:this.pageSize
                 }
                 this.$http.post("/moves/eaMove",param,{emulateJSON:true}).then(function (res) {
@@ -178,13 +179,39 @@ function initVue(){
                     var code = resuest.code
                     console.log(code)
                     var msg = resuest.msg
-                    if(code == '7'){
+                    if(code == "7"){
+                        //获取数据失败
                         var $toastContent = $('<span style = "color: red">' + msg + '</span>');
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    Materialize.toast(msg, 4000);
-                    this.attendances = resuest.result.list
+                    this.moves = resuest.result
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
+                });
+            },otherMove:function (time,terminals_no) {
+                var aurl = "/moves/otherMove";
+                this.url = aurl
+                var param = {
+                    page:1,
+                    pageSize:this.pageSize
+                }
+                this.$http.post("/moves/otherMove",param,{emulateJSON:true}).then(function (res) {
+                    var resuest = res.data
+                    var code = resuest.code
+                    console.log(code)
+                    var msg = resuest.msg
+                    if(code == "7"){
+                        //获取数据失败
+                        var $toastContent = $('<span style = "color: red">' + msg + '</span>');
+                        Materialize.toast($toastContent, 4000);
+                        return;
+                    }
+                    this.moves = resuest.result
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
                 });
             },paging:function (page) {
                 if(page > this.pageTotal || page < 1){
@@ -194,7 +221,7 @@ function initVue(){
                     page:page,
                     pageSize:this.pageSize
                 }
-                this.$http.post("/pak/attendance", param, {emulateJSON: true}).then(function (res) {
+                this.$http.post(this.url, param, {emulateJSON: true}).then(function (res) {
                     var resultMsg = res.data;
                     if(resultMsg.code == "7"){
                         var $toastContent = $('<span style = "color: red">'+resultMsg.msg+'</span>');

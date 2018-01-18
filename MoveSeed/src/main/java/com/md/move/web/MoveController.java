@@ -35,7 +35,7 @@ public class MoveController {
      */
     @RequestMapping("/indexMove")
     public String indexData(int page,int pageSize){
-        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        ResultMsg resultMsg = moveService.findAllMoveByPage(page,pageSize);
         String json = JSON.toJSONString(resultMsg);
         return json;
     }
@@ -48,7 +48,7 @@ public class MoveController {
      */
     @RequestMapping("/eaMove")
     public String EAData(int page,int pageSize){
-        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,1);
         String json = JSON.toJSONString(resultMsg);
         return json;
     }
@@ -61,7 +61,7 @@ public class MoveController {
      */
     @RequestMapping("/jskMove")
     public String JSKData(int page,int pageSize){
-        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,2);
         String json = JSON.toJSONString(resultMsg);
         return json;
     }
@@ -74,7 +74,7 @@ public class MoveController {
      */
     @RequestMapping("/domesticMove")
     public String domesticData(int page,int pageSize){
-        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,3);
         String json = JSON.toJSONString(resultMsg);
         return json;
     }
@@ -87,7 +87,13 @@ public class MoveController {
      */
     @RequestMapping("/animationMove")
     public String animationData(int page,int pageSize){
-        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize);
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,4);
+        String json = JSON.toJSONString(resultMsg);
+        return json;
+    }
+    @RequestMapping("/otherMove")
+    public String otherData(int page,int pageSize){
+        ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,0);
         String json = JSON.toJSONString(resultMsg);
         return json;
     }

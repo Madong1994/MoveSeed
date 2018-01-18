@@ -13,7 +13,9 @@ import com.md.move.util.ResultMsg;
  * 窈窕淑女，君子好逑。
  */
 public interface MoveService {
-    ResultMsg findMoveByPage(int page,int pageSize);
+    ResultMsg findMoveByPage(int page,int pageSize,int type);
+
+    ResultMsg findAllMoveByPage(int page,int pageSize);
 
     int insertMove(Move move);
 }

@@ -28,11 +28,29 @@ public class MoveServiceImpl implements MoveService {
     @Autowired
     MoveDao moveDao;
     @Override
-    public ResultMsg findMoveByPage(int page, int pageSize) {
+    public ResultMsg findMoveByPage(int page, int pageSize,int type) {
         ResultMsg resultMsg = new ResultMsg();
         try{
             PageHelper.startPage(page,pageSize);
-            List<Move> moves = moveDao.findAllMove();
+            List<Move> moves = moveDao.findAllMove(type);
+            PageInfo<Move> pageInfo = new PageInfo<>(moves);
+            resultMsg.setCode(0);
+            resultMsg.setMsg("操作成功！");
+            resultMsg.setResult(pageInfo);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            resultMsg.setMsg("系统异常！");
+            resultMsg.setCode(7);
+        }
+        return resultMsg;
+    }
+
+    @Override
+    public ResultMsg findAllMoveByPage(int page, int pageSize) {
+        ResultMsg resultMsg = new ResultMsg();
+        try{
+            PageHelper.startPage(page,pageSize);
+            List<Move> moves = moveDao.findMove();
             PageInfo<Move> pageInfo = new PageInfo<>(moves);
             resultMsg.setCode(0);
             resultMsg.setMsg("操作成功！");

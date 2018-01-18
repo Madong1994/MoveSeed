@@ -1,5 +1,7 @@
 package com.md.move.crawler;
 
+import com.md.move.entity.Move;
+import com.sun.org.apache.bcel.internal.generic.MONITORENTER;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -46,6 +48,28 @@ public class MyMoveProcesser implements PageProcessor {
                 String resource = html.xpath( "//ul/li[2]/a/@href" ).toString();
                 String size = html.xpath( "//ul/li[4]/text()" ).toString();
                 String date = html.xpath( "//ul/li[5]/text()" ).toString();
+                Move move = new Move();
+                move.setMove_name(moveName);
+                move.setGain_date(date);
+                move.setResource(resource);
+                move.setSize(size);
+                move.setType_name(typeName);
+                if("日韩电影".equals(typeName)){
+                    move.setType(2);
+                }
+                if("欧美电影".equals(typeName)){
+                    move.setType(1);
+                }
+                if("国产电影".equals(typeName)){
+                    move.setType(3);
+                }
+                if("动画电影".equals(typeName)){
+                    move.setType(4);
+                }
+                if(null == typeName){
+                    move.setType(0);
+                }
+                page.putField("move",move);
                 System.out.println(typeName + "------"+moveName+"----&"+resource+"&---"+size+"---"+date);
             }
             //.table > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)
