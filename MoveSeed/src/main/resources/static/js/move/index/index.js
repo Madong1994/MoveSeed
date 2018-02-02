@@ -205,16 +205,16 @@ function initVue(){
                     pageSize:this.pageSize
                 }
                 this.$http.post(this.url, param, {emulateJSON: true}).then(function (res) {
-                    var resultMsg = res.data;
-                    if(resultMsg.code == "7"){
-                        var $toastContent = $('<span style = "color: red">'+resultMsg.msg+'</span>');
+                    var resuest = res.data;
+                    if(resuest.code == "7"){
+                        var $toastContent = $('<span style = "color: red">'+resuest.msg+'</span>');
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.pageTotal = resultMsg.result.pages;
-                    this.count = resultMsg.result.total;
-                    this.page = resultMsg.result.pageNum;
-                    this.attendances = resultMsg.result.list;
+                    this.moves = resuest.result.list;
+                    this.pageTotal = resuest.result.pages;
+                    this.count = resuest.result.total;
+                    this.page = resuest.result.pageNum;
                     $('#table_body')[0].scrollTop=0;
                 });
             }
