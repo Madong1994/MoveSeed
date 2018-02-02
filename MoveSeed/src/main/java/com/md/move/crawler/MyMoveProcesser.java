@@ -1,13 +1,14 @@
 package com.md.move.crawler;
 
+import com.md.move.dao.MoveDao;
 import com.md.move.entity.Move;
-import com.sun.org.apache.bcel.internal.generic.MONITORENTER;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,19 +24,33 @@ public class MyMoveProcesser implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
 
     public static void main(String[] args) {
+
         System.out.println("开始爬取...");
         long startTime = System.currentTimeMillis();
         Spider.create(new MyMoveProcesser())
-                .addUrl("http://www.55xia.com/?page=5").thread(5).run();
+                .addUrl("http://www.55xia.com/?page=5") .thread(5).run();
+        long endTime = System.currentTimeMillis();
+        System.out.println("爬取结束...共耗时："+(endTime-startTime)/1000+"秒");
+    }
+
+    /**
+     * 开始爬取数据
+     */
+    public static void startGetPage(MoveDao moveDao){
+        System.out.println("开始爬取...");
+        long startTime = System.currentTimeMillis();
+        Spider.create(new MyMoveProcesser())
+                .addUrl("http://www.55xia.com/?page=5") .addPipeline(new MyMovePipeline(moveDao)).thread(5).run();
         long endTime = System.currentTimeMillis();
         System.out.println("爬取结束...共耗时："+(endTime-startTime)/1000+"秒");
     }
     @Override
     public void process(Page page) {
         if(page.getUrl().regex("http://www\\.55xia\\.com/.*").match()){
+            List<Move> moves = new ArrayList<>();
 //            List<String> trs = page.getHtml().xpath("/html/body/div/table/tbody/tr").all();
-//            List<String> trs = page.getHtml().xpath("/html/body/div/table/tbody/tr").all();
-            List<String> trs = page.getHtml().css(".table > tbody:nth-child(2)").all();
+            List<String> trs = page.getHtml().xpath("/html/body/div/table/tbody/tr").all();
+//            List<String> trs = page.getHtml().css(".table > tbody:nth-child(2)").all();
             for(String tr: trs){
 //                System.out.println(tr);
                 tr = tr.replaceAll( "tr", "ul" );
@@ -53,7 +68,7 @@ public class MyMoveProcesser implements PageProcessor {
                 move.setGain_date(date);
                 move.setResource(resource);
                 move.setSize(size);
-                move.setType_name(typeName);
+                move.setMove_type(typeName);
                 if("日韩电影".equals(typeName)){
                     move.setType(2);
                 }
@@ -69,9 +84,10 @@ public class MyMoveProcesser implements PageProcessor {
                 if(null == typeName){
                     move.setType(0);
                 }
-                page.putField("move",move);
-                System.out.println(typeName + "------"+moveName+"----&"+resource+"&---"+size+"---"+date);
+                moves.add(move);
+//                System.out.println(typeName + "------"+moveName+"----&"+resource+"&---"+size+"---"+date);
             }
+            page.putField("moves",moves);
             //.table > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)
         }
     }

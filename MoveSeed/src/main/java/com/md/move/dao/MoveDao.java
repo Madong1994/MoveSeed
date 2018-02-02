@@ -1,7 +1,9 @@
 package com.md.move.dao;
 
+import com.md.move.dao.provider.provider;
 import com.md.move.entity.Move;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,6 +25,10 @@ public interface MoveDao {
     @Select("SELECT * FROM move")
     List<Move> findMove();
 
-    @Insert("INSERT INTO move (type_name,move_name,resource,size,gain_date) values (#{move.type_name,move.move_name,move.resource,move.size,move.gain_date})")
-    int insertMove(@Param("move") Move move);
+    @Insert("INSERT INTO move (move_type,move_name,resource,size,gain_date, type) values (#{move_type},#{move_name},#{resource},#{size},#{gain_date},#{type})")
+    int insertMove(Move move);
+
+//    @Insert("INSERT INTO move (move_type,move_name,resource,size,gain_date, type) values (#{move_type},#{move_name},#{resource},#{size},#{gain_date},#{type})")
+    @InsertProvider(type = provider.class,method = "insertAllMove")
+    int insertMoves(List<Move> list);
 }

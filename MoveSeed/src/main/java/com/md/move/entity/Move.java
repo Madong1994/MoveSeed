@@ -11,20 +11,12 @@ package com.md.move.entity;
  */
 public class Move {
     private int id;
-    private String type_name;
+    private String move_type;
     private int type;//0:其他，1：欧美，2：日韩，3：国产，4：动画
     private String move_name;
     private String resource;
     private String size;
     private String gain_date;
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public int getId() {
         return id;
@@ -34,12 +26,20 @@ public class Move {
         this.id = id;
     }
 
-    public String getType_name() {
-        return type_name;
+    public String getMove_type() {
+        return move_type;
     }
 
-    public void setType_name(String type_name) {
-        this.type_name = type_name;
+    public void setMove_type(String move_type) {
+        this.move_type = move_type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getMove_name() {

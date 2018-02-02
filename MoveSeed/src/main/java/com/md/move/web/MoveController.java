@@ -6,6 +6,7 @@ import com.md.move.util.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by 马东 on 2018/1/10.
@@ -91,10 +92,31 @@ public class MoveController {
         String json = JSON.toJSONString(resultMsg);
         return json;
     }
+
+    /**
+     * 其他
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @RequestMapping("/otherMove")
     public String otherData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,0);
         String json = JSON.toJSONString(resultMsg);
         return json;
+    }
+
+    /**
+     * 开始爬取数据
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getMove")
+    public String getMove(){
+        int res = moveService.insertMove(null);
+        if(res == 0){
+            return "ok!";
+        }
+        return "<span style='color:red;'>error!</span>";
     }
 }

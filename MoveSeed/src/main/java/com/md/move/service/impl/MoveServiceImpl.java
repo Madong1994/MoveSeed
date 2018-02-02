@@ -2,6 +2,7 @@ package com.md.move.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.md.move.crawler.MyMoveProcesser;
 import com.md.move.dao.MoveDao;
 import com.md.move.entity.Move;
 import com.md.move.service.MoveService;
@@ -65,6 +66,13 @@ public class MoveServiceImpl implements MoveService {
 
     @Override
     public int insertMove(Move move) {
-        return moveDao.insertMove(move);
+        int res = 0;
+        try{
+            MyMoveProcesser.startGetPage(moveDao);
+        }catch (Exception e){
+            res = 1;
+            logger.error(e.getMessage());
+        }
+        return res;
     }
 }
