@@ -13,13 +13,21 @@ function initVue(){
             url:'/moves/indexMove'
         },
         mounted:function () {
-            this.init()
-            this.recordInit()
+            console.log(1)
+            this.initIndex();
+            // this.recordInit()
         },
         methods: {
-            init:function () {
-                this.$http.post("/moves/indexMove").then(function (res) {
+            initIndex:function () {
+                var param = {
+                    page:this.page,
+                    pageSize:this.pageSize
+                }
+                this.$http.post("/moves/indexMove",param,{emulateJSON:true}).then(function (res) {
                     var resuest = res.data
+                    console.log("----------")
+                    console.log(res.data)
+                    console.log(resuest)
                     var code = resuest.code
                     console.log(code)
                     var msg = resuest.msg
@@ -29,17 +37,26 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list
+                    // var movestest = resuest.result
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;
+                    console.log(this.moves)
+                    console.log(this.pageTotal)
+                    console.log(this.count)
+                    console.log(this.page)
                 });
-            },recordInit:function () {
+            },allmove:function () {
+                this.initIndex();
+            },
+            recordInit:function () {
                 var param = {
                     page:this.page,
                     pageSize:this.pageSize
                 }
-                this.$http.post("/pak/attendance",param,{emulateJSON:true}).then(function (res) {
+                var turl = this.url;
+                this.$http.post(turl,param,{emulateJSON:true}).then(function (res) {
                     var resuest = res.data
                     var code = resuest.code
                     console.log(code)
@@ -63,39 +80,7 @@ function initVue(){
                 }
                 return result;
             },
-            connectPak:function () {
-                // var address = this.Trim($('#address').val(),"g")
-                var terminano = this.Trim($('#terminano').val(),"g")
-                // var token = this.Trim($('#token').val(),"g")
-
-                if(terminano == ''){
-                    return;
-                }
-
-                var param = {
-                    terminals_no:terminano,
-                    /*address:address,
-                     token:token*/
-                }
-
-                this.$http.post("/pak/config",param,{emulateJSON: true}).then(function (res) {
-                    var resuest = res.data
-                    var code = resuest.code
-                    console.log(code)
-                    var msg = resuest.msg
-                    if(code == "7"){
-                        //获取数据失败
-                        var $toastContent = $('<span style = "color: red">' + msg + '</span>');
-                        Materialize.toast($toastContent, 4000);
-                        return;
-                    }
-                    Materialize.toast(msg, 4000, 'rounded');
-                    this.paks = resuest.result
-                    console.log(resuest.result)
-                    this.select(resuest.result)
-                });
-            },
-            animationMove:function (terminals_no) {
+            animationMove:function () {
                 var aurl = "/moves/animationMove";
                 this.url = aurl;
                 var param = {
@@ -113,13 +98,12 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list;
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;
                 });
             },domesticMove:function () {
-                var terminals_no = $('#selected').val();
                 var aurl = "/moves/domesticMove";
                 this.url = aurl
                 var param = {
@@ -137,7 +121,7 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list;
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;
@@ -145,7 +129,6 @@ function initVue(){
             },jskMove:function () {
                 var aurl = "/moves/jskMove";
                 this.url = aurl
-                var terminals_no = $('#selected').val();
                 // alert(terminals_no)
                 var param = {
                     page:1,
@@ -162,12 +145,12 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list;
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;
                 });
-            },eaMove:function (time,terminals_no) {
+            },eaMove:function () {
                 var aurl = "/moves/eaMove";
                 this.url = aurl
                 var param = {
@@ -185,12 +168,12 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list;
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;
                 });
-            },otherMove:function (time,terminals_no) {
+            },otherMove:function () {
                 var aurl = "/moves/otherMove";
                 this.url = aurl
                 var param = {
@@ -208,7 +191,7 @@ function initVue(){
                         Materialize.toast($toastContent, 4000);
                         return;
                     }
-                    this.moves = resuest.result
+                    this.moves = resuest.result.list;
                     this.pageTotal = resuest.result.pages;
                     this.count = resuest.result.total;
                     this.page = resuest.result.pageNum;

@@ -17,12 +17,12 @@
         </div>
         <div class="ms-layout-center-horizontal sm-width-60-per sm-height-100-per ">
             <div class="sm-width-50-per ms-height-100-per ms-layout-center-horizontal ">
-               <div ><a href="#" v-on:click="">全部</a></div>
+               <div ><a href="#" v-on:click="allmove">全部</a></div>
                <div class="sm-margin-left-1rem"><a href="#" v-on:click="eaMove">欧美电影</a></div>
                <div class="sm-margin-left-1rem"><a href="#" v-on:click="domesticMove">国产电影</a></div>
                <div class="sm-margin-left-1rem"><a href="#" v-on:click="jskMove">日韩电影</a></div>
                <div class="sm-margin-left-1rem"><a href="#" v-on:click="animationMove">动画电影</a></div>
-               <div class="sm-margin-left-1rem"><a href="#" v-on:click="">其他</a></div>
+               <div class="sm-margin-left-1rem"><a href="#" v-on:click="otherMove">其他</a></div>
             </div>
             <div class="sm-width-50-per ms-height-100-per sm-layout-left-center ">
                 <div class="sm-height-100-per sm-width-40-per">
@@ -36,10 +36,11 @@
     </div>
     <!--电影列表-->
     <div class="sm-height-90-per sm-width-100-per sm-layout-center-horizontal">
-        <div class="sm-height-100-per sm-width-15-per ">
-            空白
+        <div class="sm-height-100-per sm-width-15-per ms-layout-wrap-vertical">
+            要贴广告？来呀！联系我们！
         </div>
         <div class="sm-height-100-per sm-width-70-per sm-left-border-2px-black sm-right-border-2px-black">
+
             <div class="sm-height-8-per sm-width-100-per">
                 <table class="bordered highlight centered">
                     <thead>
@@ -52,21 +53,22 @@
                     </thead>
                 </table>
             </div>
-            <div class="ms-height-92-per sm-width-100-per ms-scrollbar-black" style="overflow: scroll">
+            <div class="ms-height-82-per sm-width-100-per ms-scrollbar-black" style="overflow: scroll">
                 <table class="bordered highlight centered">
                     <tbody>
                     <tr v-for ="item in moves">
-                        <td style="width: 10%">{{item.type_name}}</td>
-                        <td style="width: 60%"><a v-bind:href="item.resource"></a>{{item.move_name}}</td>
+                        <td style="width: 10%">{{item.move_type}}</td>
+                        <td style="width: 60%"><a v-bind:href="item.resource">{{item.move_name}}</a></td>
                         <td style="width: 10%">{{item.size}}</td>
                         <td style="width: 20%">{{item.gain_date}}</td>
                     </tr>
 
                     </tbody>
                 </table>
+
             </div>
             <!--分页-->
-            <div class="ms-height-8-per ms-width-100-per ms-margin-top-1rem debug">
+            <div class="ms-height-8-per ms-width-100-per ms-margin-top-1rem ">
 
 
                 <ul class="pagination ">
@@ -80,11 +82,14 @@
                 </ul>
 
             </div>
+            <div class="ms-width-100-per ms-height-10-per ms-layout-center-horizontal sm-left-border-2px-black sm-right-border-2px-black" style="background-color: #dddddd">网站数据均来源于网络，我们只提供web页面服务，并不提供影片资源存储，也不参与录制、上传 若本站收录的节目无意侵犯了贵司版权，请给网页底部邮箱地址来信，我们会及时处理和回复，谢谢。</div>
         </div>
-        <div class="sm-height-100-per sm-width-15-per ">
-            空白
+        <div class="sm-height-100-per sm-width-15-per ms-layout-wrap-vertical">
+            要贴广告？来呀！联系我们！
         </div>
+
     </div>
+
 </div>
 
 </body>
@@ -94,11 +99,11 @@
 <script th:src="@{/js/vue/vue.js}" src="../static/js/vue/vue.js"></script>
 <script th:src="@{/js/vue/vue-resource.min.js}" src="../static/js/vue/vue-resource.min.js"></script>
 <script th:src="@{/js/move/init.js}" src="../static/js/move/init.js"></script>
-<script th:src="@{/js/move/init.js}" src="../static/js/move/index/index.js"></script>
+<script th:src="@{/js/move/index/index.js}" src="../static/js/move/index/index.js"></script>
 <script th:inline="javascript" type="text/javascript">
     $().ready(function () {
         initSize($("#move_root"))
-
+        initVue();
     })
 
 </script>

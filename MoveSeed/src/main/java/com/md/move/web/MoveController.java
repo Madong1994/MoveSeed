@@ -34,6 +34,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/indexMove")
     public String indexData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findAllMoveByPage(page,pageSize);
@@ -47,6 +48,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/eaMove")
     public String EAData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,1);
@@ -60,6 +62,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/jskMove")
     public String JSKData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,2);
@@ -73,6 +76,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/domesticMove")
     public String domesticData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,3);
@@ -86,6 +90,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/animationMove")
     public String animationData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,4);
@@ -99,6 +104,7 @@ public class MoveController {
      * @param pageSize
      * @return
      */
+    @ResponseBody
     @RequestMapping("/otherMove")
     public String otherData(int page,int pageSize){
         ResultMsg resultMsg = moveService.findMoveByPage(page,pageSize,0);

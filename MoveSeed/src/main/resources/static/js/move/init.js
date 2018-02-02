@@ -19,5 +19,5 @@ function initSize($obj, isIndex)
     {
         $obj.css({width:width,height:height});
     }
-    onWindowResize();
+    // onWindowResize();
 }

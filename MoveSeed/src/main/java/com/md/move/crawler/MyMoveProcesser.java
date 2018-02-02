@@ -2,6 +2,7 @@ package com.md.move.crawler;
 
 import com.md.move.dao.MoveDao;
 import com.md.move.entity.Move;
+import org.apache.commons.lang3.StringUtils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -28,7 +29,7 @@ public class MyMoveProcesser implements PageProcessor {
         System.out.println("开始爬取...");
         long startTime = System.currentTimeMillis();
         Spider.create(new MyMoveProcesser())
-                .addUrl("http://www.55xia.com/?page=5") .thread(5).run();
+                .addUrl("http://www.55xia.com/?page=1") .thread(5).run();
         long endTime = System.currentTimeMillis();
         System.out.println("爬取结束...共耗时："+(endTime-startTime)/1000+"秒");
     }
@@ -40,13 +41,22 @@ public class MyMoveProcesser implements PageProcessor {
         System.out.println("开始爬取...");
         long startTime = System.currentTimeMillis();
         Spider.create(new MyMoveProcesser())
-                .addUrl("http://www.55xia.com/?page=5") .addPipeline(new MyMovePipeline(moveDao)).thread(5).run();
+                .addUrl("http://www.55xia.com/?page=1") .addPipeline(new MyMovePipeline(moveDao)).thread(5).run();
         long endTime = System.currentTimeMillis();
         System.out.println("爬取结束...共耗时："+(endTime-startTime)/1000+"秒");
     }
     @Override
     public void process(Page page) {
+
+        String reUrl = page.getHtml().xpath("/html/body/div/ul/li/a[@rel=next]/@href").toString();
+        if(StringUtils.isNotEmpty(reUrl)){
+            reUrl = "http://www.55xia.com"+reUrl;
+            page.addTargetRequest(reUrl);
+        }
+
+        /*这是目标数据*/
         if(page.getUrl().regex("http://www\\.55xia\\.com/.*").match()){
+
             List<Move> moves = new ArrayList<>();
 //            List<String> trs = page.getHtml().xpath("/html/body/div/table/tbody/tr").all();
             List<String> trs = page.getHtml().xpath("/html/body/div/table/tbody/tr").all();
@@ -90,6 +100,7 @@ public class MyMoveProcesser implements PageProcessor {
             page.putField("moves",moves);
             //.table > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)
         }
+
     }
 
     @Override
